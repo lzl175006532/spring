@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           					http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        					http://www.springframework.org/schema/context 
+        					http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        					http://www.springframework.org/schema/aop 
+        					http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean id = "savePerson" class = "com.lzl.privilege.service.impl.SavePersonImpl"/>
+	<bean id = "aopAspect" class = "com.lzl.privilege.AopAspect"/>
+	<aop:config>
+		<aop:pointcut expression="execution ( * com.lzl.privilege.service.impl.SavePersonImpl.*(..))" 
+					id="perform" />
+		<aop:aspect ref="aopAspect" >
+			<aop:around method="aspect" pointcut-ref="perform" />
+		</aop:aspect> 
+	</aop:config>
+	<context:component-scan base-package="com.lzl"></context:component-scan>
+</beans>
